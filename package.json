@@ -6,7 +6,7 @@
   "author": "vaukalak",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint . lib/ test/",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "./node_modules/.bin/mocha --compilers js:@babel/register"
   },

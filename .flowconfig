@@ -3,7 +3,7 @@
 [include]
 
 [libs]
-definitions/npm/
+flow-typed/npm/
 
 [lints]
 

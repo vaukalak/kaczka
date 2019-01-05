@@ -1,3 +1,4 @@
+// @flow
 // flow-typed signature: ae94222964881f91f3333824878bbb2f
 // flow-typed version: fee7183de9/mocha_v5.x.x/flow_>=v0.28.x
 
@@ -192,7 +193,7 @@ declare function beforeEach(description: string, callback: (/* this: $npm$mocha$
 declare function afterEach(callback: (/* this: $npm$mocha$BeforeAndAfterContext, */ done: $npm$mocha$done) => mixed): void;
 declare function afterEach(description: string, callback: (/* this: $npm$mocha$BeforeAndAfterContext, */ done: $npm$mocha$done) => mixed): void;
 
-declare module "mocha" {
+declare module 'mocha' {
   declare export var mocha: typeof mocha;
   declare export var describe: typeof describe;
   declare export var xdescribe: typeof xdescribe;
