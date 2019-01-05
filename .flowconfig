@@ -1,0 +1,12 @@
+[ignore]
+
+[include]
+
+[libs]
+definitions/npm/
+
+[lints]
+
+[options]
+
+[strict]

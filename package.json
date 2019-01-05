@@ -1,0 +1,43 @@
+{
+  "name": "kachka",
+  "version": "1.0.0",
+  "description": "redux ducks system built with flowtype in mind",
+  "main": "index.js",
+  "author": "vaukalak",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint . lib/ test/",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "./node_modules/.bin/mocha --compilers js:@babel/register"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "chai": "^4.2.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
+    "eslint": "^5.12.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-flow-header": "^0.2.0",
+    "eslint-plugin-flowtype": "^3.2.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.12.3",
+    "flow-bin": "^0.89.0",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
+    "mocha": "^5.2.0",
+    "react-dom": "^16.7.0"
+  },
+  "dependencies": {}
+}
