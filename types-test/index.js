@@ -39,6 +39,11 @@ const fooCreator: FSACreator<{ x: number }> = duck.defineAction('FOO');
 fooCreator({ x: 123 });
 fooCreator(new Error());
 
+const fooAction = fooCreator({ x: 123 });
+if (fooAction.error) {
+  (fooAction.payload: Error);
+} else {
+  (fooAction.payload.x: number);
+}
+
 (fooCreator.ACTION_TYPE: string);
-
-
