@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable no-unused-expressions */
 import type {
   FSAError,
   FSASuccess,
@@ -10,7 +11,7 @@ import {
 
 // actions
 
-const fooFsa: FSA<number> = { type: 'FOO', payload: 123, error: false };
+const fooFsa: FSA<number, Error> = { type: 'FOO', payload: 123, error: false };
 
 if (fooFsa.error) {
   (fooFsa.payload: Error);
@@ -22,7 +23,7 @@ const fooFsaSuccess: FSASuccess<number> = { type: 'FOO', payload: 123 };
 
 (fooFsaSuccess.payload: number);
 
-const fooFsaError: FSAError<> = { type: 'FOO', payload: new Error(), error: true };
+const fooFsaError: FSAError<Error> = { type: 'FOO', payload: new Error(), error: true };
 
 (fooFsaError.payload: Error);
 
@@ -47,3 +48,4 @@ if (fooAction.error) {
 }
 
 (fooCreator.ACTION_TYPE: string);
+/* eslint-enable no-unused-expressions */
