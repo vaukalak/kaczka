@@ -24,6 +24,7 @@ module.exports = {
   "rules": {
     "flow-header/flow-header": 2,
     "react/jsx-curly-brace-presence": "off",
+    "import/prefer-default-export": "off",
     // TODO: create issue on eslint github
     "arrow-parens": "off",
   }
