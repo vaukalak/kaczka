@@ -9,6 +9,7 @@ describe('createReducer', () => {
   const duck = createDuck('type-test');
   type FooPayload = { foo: number };
   const foo: FSACreator<FooPayload> = duck.defineAction('FOO');
+  const bar: FSACreator<void> = duck.defineAction('BAR');
 
 
   const fooSuccessHandler = (state, action) => ({
@@ -53,12 +54,14 @@ describe('createReducer', () => {
 
   // DEFAULT
 
+  const defaultHandler = (state, { type }) => ({
+    ...state,
+    events: [...state.events, type],
+  });
+
   it('should invoke DEFAULT handler, when no other handler mapped', () => {
     const reducer: FSAReducer<State> = duck.createReducer(INITIAL_STATE);
-    reducer.withHandler(ActionMatchers.DEFAULT, (state, { type }) => ({
-      ...state,
-      events: [...state.events, type],
-    }));
+    reducer.withHandler(ActionMatchers.DEFAULT, defaultHandler);
     let nextState = reducer(INITIAL_STATE, { type: 'A', payload: undefined });
     nextState = reducer(nextState, { type: 'B', payload: undefined });
     expect(nextState.events).to.deep.equal(['A', 'B']);
@@ -67,12 +70,36 @@ describe('createReducer', () => {
   it('should not invoke DEFAULT when, there already a handler', () => {
     const reducer: FSAReducer<State> = duck.createReducer(INITIAL_STATE);
     reducer.withHandler('A', state => state);
-    reducer.withHandler(ActionMatchers.DEFAULT, (state, { type }) => ({
-      ...state,
-      events: [...state.events, type],
-    }));
+    reducer.withHandler(ActionMatchers.DEFAULT, defaultHandler);
     let nextState = reducer(INITIAL_STATE, { type: 'A', payload: undefined });
     nextState = reducer(nextState, { type: 'B', payload: undefined });
-    expect(nextState.events).to.deep.equal(['B']);
+    nextState = reducer(nextState, bar());
+    expect(nextState.events).to.deep.equal(['B', 'type-test/BAR']);
+  });
+
+  it('should invoke DEFAULT when action is only mapped for error', () => {
+    const reducer: FSAReducer<State> = duck.createReducer(INITIAL_STATE);
+    reducer.withHandler('A', state => state);
+    reducer.withHandler(ActionMatchers.DEFAULT, defaultHandler);
+    let nextState = reducer(INITIAL_STATE, { type: 'A', payload: undefined });
+    nextState = reducer(nextState, { type: 'B', payload: undefined });
+    nextState = reducer(nextState, bar());
+    expect(nextState.events).to.deep.equal(['B', 'type-test/BAR']);
+  });
+
+  it('should invoke DEFAULT on success handler when action is only mapped for error', () => {
+    const reducer: FSAReducer<State> = duck.createReducer(INITIAL_STATE);
+    reducer.withErrorHandler('A', state => state);
+    reducer.withSuccessHandler(ActionMatchers.DEFAULT, defaultHandler);
+    const nextState = reducer(INITIAL_STATE, { type: 'A', payload: undefined });
+    expect(nextState.events).to.deep.equal(['A']);
+  });
+
+  it('should not invoke DEFAULT on success handler when action is only mapped on common handler', () => {
+    const reducer: FSAReducer<State> = duck.createReducer(INITIAL_STATE);
+    reducer.withHandler('A', state => state);
+    reducer.withSuccessHandler(ActionMatchers.DEFAULT, defaultHandler);
+    const nextState = reducer(INITIAL_STATE, { type: 'A', payload: undefined });
+    expect(nextState.events).to.deep.equal([]);
   });
 });
