@@ -1,6 +1,6 @@
 // @flow
 import { expect } from 'chai';
-import { createDuck } from '../lib';
+import { ActionMatchers, createDuck } from '../lib';
 import type { FSACreator, FSAReducer } from '../lib';
 
 describe('createReducer', () => {
@@ -49,5 +49,30 @@ describe('createReducer', () => {
 
     nextState = reducer(INITIAL_STATE, foo(new Error('bad')));
     expect(nextState).to.deep.equal({ x: 10, events: ['bad'] });
+  });
+
+  // DEFAULT
+
+  it('should invoke DEFAULT handler, when no other handler mapped', () => {
+    const reducer: FSAReducer<State> = duck.createReducer(INITIAL_STATE);
+    reducer.withHandler(ActionMatchers.DEFAULT, (state, { type }) => ({
+      ...state,
+      events: [...state.events, type],
+    }));
+    let nextState = reducer(INITIAL_STATE, { type: 'A', payload: undefined });
+    nextState = reducer(nextState, { type: 'B', payload: undefined });
+    expect(nextState.events).to.deep.equal(['A', 'B']);
+  });
+
+  it('should not invoke DEFAULT when, there already a handler', () => {
+    const reducer: FSAReducer<State> = duck.createReducer(INITIAL_STATE);
+    reducer.withHandler('A', state => state);
+    reducer.withHandler(ActionMatchers.DEFAULT, (state, { type }) => ({
+      ...state,
+      events: [...state.events, type],
+    }));
+    let nextState = reducer(INITIAL_STATE, { type: 'A', payload: undefined });
+    nextState = reducer(nextState, { type: 'B', payload: undefined });
+    expect(nextState.events).to.deep.equal(['B']);
   });
 });
