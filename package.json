@@ -1,5 +1,5 @@
 {
-  "name": "kachka",
+  "name": "kaczka",
   "version": "1.0.0",
   "description": "redux ducks system built with flowtype in mind",
   "main": "index.js",

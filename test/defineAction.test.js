@@ -6,8 +6,8 @@ describe('defineAction', () => {
   const duck = createDuck('define-action-test');
   const foo = duck.defineAction('FOO');
 
-  it('action creator should contain namespaced ACTION_TYPE field', () => {
-    expect(foo.ACTION_TYPE).to.equal('define-action-test/FOO');
+  it('action creator should contain namespaced actionType field', () => {
+    expect(foo.actionType).to.equal('define-action-test/FOO');
   });
 
   it('action type should be namespaced', () => {

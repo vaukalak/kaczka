@@ -47,5 +47,5 @@ if (fooAction.error) {
   (fooAction.payload.x: number);
 }
 
-(fooCreator.ACTION_TYPE: string);
+(fooCreator.actionType: string);
 /* eslint-enable no-unused-expressions */
