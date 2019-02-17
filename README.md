@@ -96,7 +96,11 @@ or
 npm i -S kaczka
 ```
 
-# P.S.
+# Examples
+
+Still work in progress, but you can find some [here](examples/README.md).
+
+## P.S.
 
 ```
 'kaczka' === toLatineLetters(translateToBelarus('duck'));

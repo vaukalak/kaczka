@@ -35,7 +35,7 @@ const fooFsaErrorNumber: FSAError<number> = { type: 'FOO', payload: 123, error: 
 
 const duck = createDuck('type-check-duck');
 
-const fooCreator: FSACreator<{ x: number }> = duck.defineAction('FOO');
+const fooCreator: FSACreator<{ x: number }, Error> = duck.defineAction('FOO');
 
 fooCreator({ x: 123 });
 fooCreator(new Error());

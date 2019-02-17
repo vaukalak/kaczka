@@ -8,8 +8,8 @@ describe('createReducer', () => {
   const INITIAL_STATE: State = { x: 10, events: [] };
   const duck = createDuck('type-test');
   type FooPayload = { foo: number };
-  const foo: FSACreator<FooPayload> = duck.defineAction('FOO');
-  const bar: FSACreator<void> = duck.defineAction('BAR');
+  const foo: FSACreator<FooPayload, Error> = duck.defineAction('FOO');
+  const bar: FSACreator<void, Error> = duck.defineAction('BAR');
 
 
   const fooSuccessHandler = (state, action) => ({
