@@ -1,10 +1,18 @@
 {
   "name": "kaczka",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "redux ducks system built with flowtype in mind",
   "main": "index.js",
   "author": "vaukalak",
   "license": "MIT",
+  "repository": "https://github.com/vaukalak/kaczka",
+  "keywords": [
+    "redux",
+    "flowtype",
+    "ducks",
+    "fsa",
+    "react"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
