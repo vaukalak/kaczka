@@ -1,6 +1,6 @@
 // @flow
-import { createDuck, ActionMatchers } from '../../lib';
-import type { FSACreator, FSAReducer } from '../../lib';
+import { createDuck, ActionMatchers } from '../../src';
+import type { FSACreator, FSAReducer } from '../../src';
 
 export type PhotoState = $Exact<{
   updatedAt?: string,

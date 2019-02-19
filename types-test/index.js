@@ -4,10 +4,10 @@ import type {
   FSAError,
   FSASuccess,
   FSA, FSACreator,
-} from '../lib/declarations';
+} from '../src/declarations';
 import {
   createDuck,
-} from '../lib';
+} from '../src';
 
 // actions
 

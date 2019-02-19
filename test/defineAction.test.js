@@ -1,6 +1,6 @@
 // @flow
 import { expect } from 'chai';
-import { createDuck } from '../lib';
+import { createDuck } from '../src';
 
 describe('defineAction', () => {
   const duck = createDuck('define-action-test');

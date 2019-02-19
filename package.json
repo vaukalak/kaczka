@@ -1,8 +1,8 @@
 {
   "name": "kaczka",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "redux ducks system built with flowtype in mind",
-  "main": "index.js",
+  "main": "lib/index.js",
   "author": "vaukalak",
   "license": "MIT",
   "repository": "https://github.com/vaukalak/kaczka",
@@ -16,7 +16,10 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "./node_modules/.bin/mocha --compilers js:@babel/register"
+    "test": "./node_modules/.bin/mocha --compilers js:@babel/register",
+    "copy-flow": "flow-copy-source src lib",
+    "build": "babel src/ -d lib",
+    "prepublish": "npm run copy-flow && npm run build"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -43,6 +46,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.12.3",
     "flow-bin": "0.91",
+    "flow-copy-source": "^2.0.3",
     "jest": "^23.6.0",
     "jest-cli": "^23.6.0",
     "mocha": "^5.2.0",

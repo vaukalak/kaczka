@@ -98,7 +98,7 @@ npm i -S kaczka
 
 # Examples
 
-Still work in progress, but you can find some [here](examples/README.md).
+Still work in progress, but you can find some [here](examples).
 
 ## P.S.
 

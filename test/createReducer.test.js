@@ -1,7 +1,7 @@
 // @flow
 import { expect } from 'chai';
-import { ActionMatchers, createDuck } from '../lib';
-import type { FSACreator, FSAReducer } from '../lib';
+import { ActionMatchers, createDuck } from '../src';
+import type { FSACreator, FSAReducer } from '../src';
 
 describe('createReducer', () => {
   type State = {| x: number, events: Array<string> |};

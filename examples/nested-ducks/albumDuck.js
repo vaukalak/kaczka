@@ -1,8 +1,7 @@
 // @flow
-import { createDuck } from '../../lib';
+import { createDuck } from '../../src';
 import createPhotoDuck, { type PhotoState } from './photoDuck';
-import type { FSASuccess } from '../../lib/declarations';
-import type {FSA} from '../../lib';
+import type { FSA } from '../../src';
 
 type IndexedPayload = { index: number };
 type IndexedErrorPayload = IndexedPayload & { error: Error };
