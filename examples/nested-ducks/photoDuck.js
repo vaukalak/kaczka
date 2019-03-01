@@ -1,6 +1,5 @@
 // @flow
 import { createDuck, ActionMatchers } from '../../src';
-import type { FSACreator, FSAReducer } from '../../src';
 
 export type PhotoState = $Exact<{
   updatedAt?: string,
@@ -11,21 +10,11 @@ export type PhotoState = $Exact<{
 
 const INITIAL_STATE = Object.freeze({ errors: [] });
 
-// TODO: remove explicit typing when https://github.com/facebook/flow/issues/7481 is resolved
-type PhotoDuck<T, E = Error> = {
-  reducer: FSAReducer<PhotoState>,
-  actions: {
-    setPhoto: FSACreator<{ url: string, updatedAt: string } & T, E>,
-    setLabel: FSACreator<{ label: string, updatedAt: string } & T, E>,
-  },
-  INITIAL_STATE: typeof INITIAL_STATE,
-};
+const createPhotoDuck = () => {
+  const photoDuck = createDuck('photos');
 
-const createPhotoDuck = <P, E>(parentDuck: string): PhotoDuck<P, E> => {
-  const photoDuck = createDuck(`${parentDuck}/photos`);
-
-  const setPhoto = photoDuck.defineAction('SET_PHOTO');
-  const setLabel = photoDuck.defineAction('SET_LABEL');
+  const setPhoto = photoDuck.defineAction<{ url: string, updatedAt: string }, Error>('SET_PHOTO');
+  const setLabel = photoDuck.defineAction<{ label: string, updatedAt: string }, Error>('SET_LABEL');
 
   const reducer = photoDuck.createReducer<PhotoState>(INITIAL_STATE);
 
@@ -55,10 +44,11 @@ const createPhotoDuck = <P, E>(parentDuck: string): PhotoDuck<P, E> => {
 
   return {
     reducer,
-    actions: {
+    actions: Object.freeze({
       setPhoto,
       setLabel,
-    },
+    }),
+    duck: photoDuck,
     INITIAL_STATE,
   };
 };

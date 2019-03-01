@@ -14,7 +14,7 @@
     "react"
   ],
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint src/ examples/",
     "lint:fix": "npm run lint -- --fix",
     "test": "./node_modules/.bin/mocha --compilers js:@babel/register",
     "copy-flow": "flow-copy-source src lib",

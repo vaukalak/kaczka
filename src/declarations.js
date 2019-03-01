@@ -39,3 +39,8 @@ export type FSAReducer<S> = {
   withSuccessHandler: (<P, E>(FSACreator<P, E>, FSASuccessHandler<S, P>) => FSAReducer<S>) &
     (string, FSASuccessHandler<S, *>) => FSAReducer<S>,
 };
+
+// utils
+
+export type ActionEnhancer<T, P, E> =
+  $ObjMap<T, <P1, E1>(FSACreator<P1, E1>) => FSACreator<P1 & P, E>>;
