@@ -1,5 +1,6 @@
 // @flow
 import { createDuck, ActionMatchers } from '../../src';
+import type { DuckSpec } from '../../src';
 
 export type PhotoState = $Exact<{
   updatedAt?: string,
@@ -10,15 +11,17 @@ export type PhotoState = $Exact<{
 
 const INITIAL_STATE = Object.freeze({ errors: [] });
 
-const createPhotoDuck = () => {
-  const photoDuck = createDuck('photos');
+const createPhotoDuck = (name: string = 'photo'): DuckSpec<*, *> => {
+  const photoDuck = createDuck(name);
 
-  const setPhoto = photoDuck.defineAction<{ url: string, updatedAt: string }, Error>('SET_PHOTO');
-  const setLabel = photoDuck.defineAction<{ label: string, updatedAt: string }, Error>('SET_LABEL');
+  const actions = {
+    setPhoto: photoDuck.defineAction('SET_PHOTO'),
+    setLabel: photoDuck.defineAction('SET_LABEL'),
+  };
 
   const reducer = photoDuck.createReducer<PhotoState>(INITIAL_STATE);
 
-  reducer.withSuccessHandler(setPhoto, (state, { payload }) => ({
+  reducer.withSuccessHandler(actions.setPhoto, (state, { payload }) => ({
     ...state,
     errors: [],
     url: payload.url,
@@ -26,7 +29,7 @@ const createPhotoDuck = () => {
   }));
 
   reducer.withSuccessHandler(
-    setLabel,
+    actions.setLabel,
     (state, { payload }) => ({
       ...state,
       label: payload.label,
@@ -44,10 +47,7 @@ const createPhotoDuck = () => {
 
   return {
     reducer,
-    actions: Object.freeze({
-      setPhoto,
-      setLabel,
-    }),
+    actions,
     duck: photoDuck,
     INITIAL_STATE,
   };

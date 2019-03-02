@@ -6,6 +6,8 @@ import type {
   FSAReducer,
   ActionMatcherType,
   ActionEnhancer,
+  Duck,
+  DuckSpec,
 } from './declarations';
 import { ActionMatchers } from './declarations';
 
@@ -84,18 +86,6 @@ export const createDuck = (namespace: string) => {
   };
 };
 
-type DuckBuilder = {
-  defineAction: <P, E>(baseType: string) => FSACreator<P, E>,
-  createReducer: <S>(initialState: S) => FSAReducer<S>,
-};
-
-type SimpleDuck<S, Actions> = {
-  reducer: FSAReducer<S>,
-  actions: Actions,
-  INITIAL_STATE: S,
-  duck: DuckBuilder,
-};
-
 export type {
   FSA,
   FSACreator,
@@ -103,6 +93,6 @@ export type {
   FSAReducer,
   ActionEnhancer,
   ActionMatcherType,
-  DuckBuilder,
-  SimpleDuck,
+  Duck,
+  DuckSpec,
 };
