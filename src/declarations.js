@@ -39,3 +39,40 @@ export type FSAReducer<S> = {
   withSuccessHandler: (<P, E>(FSACreator<P, E>, FSASuccessHandler<S, P>) => FSAReducer<S>) &
     (string, FSASuccessHandler<S, *>) => FSAReducer<S>,
 };
+
+export type Duck = {
+  defineAction: <P, E>(baseType: string) => FSACreator<P, E>,
+  createReducer: <S>(initialState: S) => FSAReducer<S>,
+};
+
+
+export type DuckSpec<S, Actions> = {|
+  reducer: FSAReducer<S>,
+  actions: Actions,
+  INITIAL_STATE: S,
+  duck?: Duck,
+|};
+
+// utils
+
+export type ActionEnhancer<T, P, E> =
+  $ObjMap<T,
+    <P1, E1>(FSACreator<P1, E1>) =>
+      FSACreator<P1 & P, E>>;
+
+type FSACreatorMap = { [string]: FSACreator<*, *> & FSACreatorMap };
+
+type Actions<T: Object> = $Exact<$ElementType<T, 'actions'>>;
+
+// type Actions<T> = $Call<<S, A>(DuckSpec<S, A>) => A, T>;
+
+type MergeFn =
+  & (<T0, T1, T2, T3, T4>(T0, T1, T2, T3, T4) =>
+  { ...Actions<T0>, ...Actions<T1>, ...Actions<T2>, ...Actions<T3>, ...Actions<T4> })
+  & (<T0, T1, T2, T3>(T0, T1, T2, T3) =>
+  { ...Actions<T0>, ...Actions<T1>, ...Actions<T2>, ...Actions<T3> })
+  & (<T0, T1, T2>(T0, T1, T2) => { ...Actions<T0>, ...Actions<T1>, ...Actions<T2> })
+  & (<T0, T1>(T0, T1) => { ...Actions<T0>, ...Actions<T1> });
+
+export type Merge<T0, T1, T2 = void, T3 = void, T4 = void, T5 = void> =
+  $Call<MergeFn, T0, T1, T2, T3, T4, T5>;

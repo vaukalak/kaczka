@@ -1,4 +1,5 @@
 [ignore]
+<PROJECT_ROOT>/lib/*
 
 [include]
 
@@ -10,3 +11,6 @@ flow-typed/npm/
 [options]
 
 [strict]
+
+[version]
+^0.91
