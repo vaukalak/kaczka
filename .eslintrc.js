@@ -22,6 +22,7 @@ module.exports = {
     }
   },
   "rules": {
+    "flowtype/generic-spacing": "off",
     "flow-header/flow-header": 2,
     "react/jsx-curly-brace-presence": "off",
     "import/prefer-default-export": "off",

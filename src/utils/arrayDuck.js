@@ -1,26 +1,22 @@
 // @flow
 import { createDuck } from '..';
 import type {
-  FSA, ActionEnhancer, DuckSpec,
+  FSA, DuckSpec, FSACreator,
 } from '..';
 
 export type IndexedErrorPayload<P> = P & { error: Error };
 
 const INITIAL_STATE = Object.freeze([]);
 
-export type ArrayActionEnhancer<EntryActions, K> = ActionEnhancer<EntryActions,
-  K,
-  IndexedErrorPayload<K>>;
-
-export type ArrayDuck<EntryState, EntryActions: Object, K> =
-  DuckSpec<$ReadOnlyArray<EntryState>,
-    ArrayActionEnhancer<EntryActions, K>>;
-
-export const createArrayDuck = <EntryState, EntryActions, K: Object>(
+export const createArrayDuck = <K: Object, EntryState, EntryActions>(
   duckName: string,
   entryDuck: DuckSpec<EntryState, EntryActions>,
   indexProp: $Keys<K>,
-): ArrayDuck<EntryState, EntryActions, K> => {
+): DuckSpec<$ReadOnlyArray<EntryState>,
+  $Exact<$ObjMap<EntryActions,
+    (<P1, E1>(FSACreator<P1, E1>) =>
+      FSACreator<{| ...$Exact<P1>, ...$Exact<K> |},
+        {| ...$Exact<E1>, ...$Exact<IndexedErrorPayload<K>> |}, >)>>> => {
   const arrayDuck = createDuck(duckName);
   const reducer = arrayDuck.createReducer<$ReadOnlyArray<EntryState>>(INITIAL_STATE);
 

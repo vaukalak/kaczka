@@ -17,26 +17,32 @@ const createAvatarDuck = (name: string) => mapAction(
   }),
 );
 
-const createPhotoListDuck = (name: string) => createArrayDuck<*, *, { photoIndex: number }>(
+const createPhotoListDuck = (name: string) => createArrayDuck<{ photoIndex: number }, _, _>(
   name,
   createPhotoDuck(`${name}/entry`),
   'photoIndex',
 );
 
-export const createUserListDuck = (name: string = 'album') => {
+export const createAlbumDuck = (name: string = 'album') => {
   const photos = createPhotoListDuck(`${name}/photos`);
   const info = albumInfoDuck(`${name}/info`);
   return combineDucks<
-    *,
+    _,
     Merge<typeof photos, typeof info>,
   >(
     { photos, info },
   );
 };
 
-export const createAlbumListDuck = (name: string) => createArrayDuck<*, *, { albumIndex: number }>(
+type DuckState<T> = $ElementType<$Call<T, ''>, 'INITIAL_STATE'>;
+
+export const createAlbumListDuck = (name: string) => createArrayDuck<
+  { albumIndex: number },
+  DuckState<typeof createAlbumDuck>,
+  _
+>(
   name,
-  createUserListDuck(`${name}/entry`),
+  createAlbumDuck(`${name}/entry`),
   'albumIndex',
 );
 
@@ -52,7 +58,11 @@ const createUserDuck = (name: string) => {
   );
 };
 
-export const createUsersListDuck = (name: string = 'users') => createArrayDuck<*, *, { userIndex: number }>(
+export const createUsersListDuck = (name: string = 'users') => createArrayDuck<
+  { userIndex: number },
+  DuckState<typeof createUserDuck>,
+  _
+>(
   name,
   createUserDuck(`${name}/entry`),
   'userIndex',

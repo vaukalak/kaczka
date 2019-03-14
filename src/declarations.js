@@ -33,11 +33,11 @@ export type FSAReducer<S> = {
   <P, E>(S, FSA<P, E>): S,
   // withHandler
   withHandler: (<P, E>(FSACreator<P, E>, FSAHandler<S, P, E>) => FSAReducer<S>) &
-    (string, FSAHandler<S, *, *>) => FSAReducer<S>,
+    (string, FSAHandler<S, any, any>) => FSAReducer<S>,
   withErrorHandler: (<P, E>(FSACreator<P, E>, FSAErrorHandler<S, E>) => FSAReducer<S>) &
-    (string, FSAErrorHandler<S, *>) => FSAReducer<S>,
+    (string, FSAErrorHandler<S, any>) => FSAReducer<S>,
   withSuccessHandler: (<P, E>(FSACreator<P, E>, FSASuccessHandler<S, P>) => FSAReducer<S>) &
-    (string, FSASuccessHandler<S, *>) => FSAReducer<S>,
+    (string, FSASuccessHandler<S, any>) => FSAReducer<S>,
 };
 
 export type Duck = {
@@ -55,16 +55,7 @@ export type DuckSpec<S, Actions> = {|
 
 // utils
 
-export type ActionEnhancer<T, P, E> =
-  $ObjMap<T,
-    <P1, E1>(FSACreator<P1, E1>) =>
-      FSACreator<P1 & P, E>>;
-
-type FSACreatorMap = { [string]: FSACreator<*, *> & FSACreatorMap };
-
 type Actions<T: Object> = $Exact<$ElementType<T, 'actions'>>;
-
-// type Actions<T> = $Call<<S, A>(DuckSpec<S, A>) => A, T>;
 
 type MergeFn =
   & (<T0, T1, T2, T3, T4>(T0, T1, T2, T3, T4) =>
@@ -76,3 +67,18 @@ type MergeFn =
 
 export type Merge<T0, T1, T2 = void, T3 = void, T4 = void, T5 = void> =
   $Call<MergeFn, T0, T1, T2, T3, T4, T5>;
+
+
+export type ActionEnhancer<T, P, E> =
+  $Exact<
+    $ObjMap<
+      T,
+      (
+        <P1, E1>(FSACreator<P1, E1>) =>
+          FSACreator<
+            {| ...$Exact<P1>, ...$Exact<P> |},
+            {| ...$Exact<E1>, ...$Exact<E> |},
+          >
+      )
+    >
+  >;

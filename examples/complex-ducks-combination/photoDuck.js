@@ -1,6 +1,6 @@
 // @flow
 import { createDuck, ActionMatchers } from '../../src';
-import type { DuckSpec } from '../../src';
+import type { DuckSpec, FSACreator } from '../../src';
 
 export type PhotoState = $Exact<{
   updatedAt?: string,
@@ -11,7 +11,12 @@ export type PhotoState = $Exact<{
 
 const INITIAL_STATE = Object.freeze({ errors: [] });
 
-const createPhotoDuck = (name: string = 'photo'): DuckSpec<*, *> => {
+type Actions = {
+  setPhoto: FSACreator<{ url: string, updatedAt: string }, Error>,
+  setLabel: FSACreator<{ label: string, updatedAt: string }, Error>,
+};
+
+const createPhotoDuck = (name: string = 'photo'): DuckSpec<PhotoState, Actions> => {
   const photoDuck = createDuck(name);
 
   const actions = {

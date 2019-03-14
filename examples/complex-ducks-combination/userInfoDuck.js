@@ -1,6 +1,6 @@
 // @flow
 import { createDuck } from '../../src';
-import type { DuckSpec } from '../../src';
+import type { DuckSpec, FSACreator } from '../../src';
 
 export type UserInfoState = $Exact<{
   firstName: string,
@@ -9,13 +9,18 @@ export type UserInfoState = $Exact<{
 
 const INITIAL_STATE = Object.freeze({ firstName: '', lastName: '' });
 
+export type UserInfoActions = {
+  setFirstName: FSACreator<{ firstName: string }, Error>,
+  setLastName: FSACreator<{ lastName: string }, Error>,
+}
+
 const albumInfoDuck = (
   name: string,
-): DuckSpec<*, *> => {
+): DuckSpec<UserInfoState, UserInfoActions> => {
   const duck = createDuck(name);
 
-  const setFirstName = duck.defineAction<{ firstName: string }, Error>('SET_FIRST_NAME');
-  const setLastName = duck.defineAction<{ lastName: string }, Error>('SET_LAST_NAME');
+  const setFirstName = duck.defineAction('SET_FIRST_NAME');
+  const setLastName = duck.defineAction('SET_LAST_NAME');
 
   const reducer = duck.createReducer<UserInfoState>(INITIAL_STATE);
 
