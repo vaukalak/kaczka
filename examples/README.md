@@ -4,4 +4,4 @@ Examples is still work in progress, feel free to send a PR with new examples, or
 
 ## running
 
-```npx babel-node examples/complex-ducks-combination/index.js```
+```npx babel-node examples/complex-ducks-combination```

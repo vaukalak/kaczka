@@ -12,10 +12,9 @@ console.log(usersListDuck.actions.setPhoto.actionType);
 console.log(JSON.stringify(usersListDuck.reducer(
   usersListDuck.INITIAL_STATE,
   usersListDuck.actions.setPhoto({
-    url: '123',
-    updatedAt: '12341234',
+    error: new Error('hello!'),
     userIndex: 0,
     albumIndex: 0,
     photoIndex: 0,
-  }),
+  }, true),
 ), undefined, 2));

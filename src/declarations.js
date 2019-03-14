@@ -17,9 +17,9 @@ export type ActionMatcherType = $Values<typeof ActionMatchers>;
 // action creators
 
 export type FSACreator<P, E> = {
-  (payload: P, isError?: boolean): FSA<P, E>,
-  (payload: Error, isError?: boolean): FSA<P, E>,
+  (payload: P, isError: false | void): FSA<P, E>,
   (payload: E, isError: true): FSA<P, E>,
+  (payload: Error, isError: true | void): FSA<P, E>,
   actionType: string,
 };
 

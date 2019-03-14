@@ -4,6 +4,7 @@ import {
   createArrayDuck,
   combineDucks,
   mapAction,
+  arraify,
 } from '../../src/utils';
 import albumInfoDuck from './albumInfoDuck';
 import createUserInfoDuck from './userInfoDuck';
@@ -19,13 +20,13 @@ const createAvatarDuck = (name: string) => mapAction(
 
 const createPhotoListDuck = (name: string) => createArrayDuck<{ photoIndex: number }, _, _>(
   name,
-  createPhotoDuck(`${name}/entry`),
+  arraify(createPhotoDuck(`${name}/entry`)),
   'photoIndex',
 );
 
 export const createAlbumDuck = (name: string = 'album') => {
   const photos = createPhotoListDuck(`${name}/photos`);
-  const info = albumInfoDuck(`${name}/info`);
+  const info = arraify(albumInfoDuck(`${name}/info`));
   return combineDucks<
     _,
     Merge<typeof photos, typeof info>,
@@ -47,9 +48,9 @@ export const createAlbumListDuck = (name: string) => createArrayDuck<
 );
 
 const createUserDuck = (name: string) => {
-  const avatar = createAvatarDuck(`${name}/avatar`);
+  const avatar = arraify(createAvatarDuck(`${name}/avatar`));
   const albums = createAlbumListDuck(`${name}/albums`);
-  const info = createUserInfoDuck(`${name}/info`);
+  const info = arraify(createUserInfoDuck(`${name}/info`));
   return combineDucks<
     *,
     Merge<typeof avatar, typeof info, typeof albums>,

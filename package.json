@@ -1,6 +1,6 @@
 {
   "name": "kaczka",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "redux ducks system built with flowtype in mind",
   "main": "lib/index.js",
   "author": "vaukalak",
