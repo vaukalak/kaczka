@@ -103,5 +103,5 @@ Still work in progress, but you can find some [here](examples).
 ## P.S.
 
 ```
-'kaczka' === toLatineLetters(translateToBelarus('duck'));
+'kaczka' === toLatineLetters(translateToBelarusian('duck'));
 ```
